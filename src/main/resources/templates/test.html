@@ -180,11 +180,6 @@ a {
     }
 }
 
-.test-item {
-	margin-top: 150px;
-	margin-left: 200px;
-	text-align: center;
-}
 .test-review {
 	margin: 0 auto;
 }
@@ -273,65 +268,119 @@ a {
 	</table>
 </div>
 
-<!-- 리뷰 댓글란. -->
-<div class="test-item">
-	<h2>리뷰</h2>
-	<table class="test-review">
-			<thead>
-				<tr>
-					<th scope="col">#</th>
-					<th scope="col">제목</th>
-					<th scope="col">글쓴이</th>
-					<th scope="col">작성일</th>
-				</tr>
-			</thead>
-			
-			<!-- ReviewPageResultDTO.dtoList 의 이름으로 호출. -->
-			<tbody>
-				<tr th:each="dto : ${result.dtoList}">
-					<th scope="row">
-						[[${dto.rno}]]
-					</th>
-					<td>
-						[[${dto.text}]]
-					</td>
-					<td>
-						[[${dto.reviewer}]]
-					</td>
-					<td>
-						[[${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}]]
-					</td>
-				</tr>
-			</tbody>
-	</table>
-	<!-- 버튼 클릭시 입력 영역이 나타나도록 JavaScript 사용 -->
-	<button id="showInput">리뷰 작성</button>
-	
-	<!-- 글 입력하는 영역(기본적으로 히든상태) -->
-	<div id="inputArea" style="display: none;">
-		<form th:action="@{/addReview}" method="post">
-			<input type="text" name="text" placeholder="리뷰 내용 입력">
-			<input type="text" name="reviewer" placeholder="작성자 입력">
-            <button type="submit">작성 완료</button>
-            <button type="button" id="cancelInput">취소</button>
-		</form>
-	</div>
-</div>
-<div>
-<br>
-<br>
-<br>
-<br>
-</div>	
+<button id="showReview">리뷰</button>
+<button id="showQnA">QnA</button>
 
-<!-- JavaScript 코드 -->
+<!-- 리뷰 댓글란. -->
+<div class="test-item" id="reviewContent" style="display: block;">
+    <table class="test-review">
+        <!-- ReviewPageResultDTO.dtoList 의 이름으로 호출. -->
+        <tbody>
+            <tr th:each="dto : ${result.dtoList}">
+                <th scope="row">
+                    [[${dto.rno}]]
+                </th>
+                <td>
+                    [[${dto.text}]]
+                </td>
+                <td>
+                    <div th:text="${#strings.substring(#authentication.name, 0 , 3) + '********'}"></div>
+                </td>
+                <td>
+                    [[${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}]]
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- 버튼 클릭시 입력 영역이 나타나도록 JavaScript 사용 -->
+    <button id="showReviewInput">리뷰 작성</button>
+    <!-- 글 입력하는 영역(기본적으로 히든상태) -->
+    <div id="reviewInputArea" style="display: none;">
+        <form th:action="@{/addReview}" method="post">
+            <input type="text" name="text" placeholder="리뷰 내용 입력">
+            <input type="submit">작성 완료</input>
+            <button id="cancelReviewInput">취소</button>
+        </form>
+    </div>
+</div>
+
+<!-- QnA 댓글란. -->
+<div id="qnaContent" style="display: none;">
+    <table class="test-review" id="qnaContent">
+        <!-- QnAPageResultDTO.dtoList 의 이름으로 호출. -->
+        <tbody>
+            <tr th:each="dto : ${result.dtoList}">
+                <th scope="row">
+                    [[${dto.qno}]] <!-- qno로 수정 -->
+                </th>
+                <td>
+                    [[${dto.text}]]
+                </td>
+                <td>
+                    <div th:text="${#strings.substring(#authentication.name, 0 , 3) + '********'}"></div>
+                </td>
+                <td>
+                    [[${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}]]
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- QnA 작성 폼 -->
+    <button id="showQnAInput">QnA 작성</button>
+    <div id="qnaInputArea" style="display: none;">
+        <!-- QnA 작성 폼 내용 -->
+        <form th:action="@{/addQnA}" method="post">
+            <input type="text" name="text" placeholder="QnA 내용 입력">
+            <input type="submit">작성 완료</input>
+            <button id="cancelQnAInput">취소</button>
+        </form>
+    </div>
+</div>
+
+<!-- JavaScript 코드를 포함하는 부분 -->
 <script>
-    document.getElementById("showInput").addEventListener("click", function() {
-        document.getElementById("inputArea").style.display = "block";
+    // 리뷰 버튼 클릭 시
+    document.getElementById("showReview").addEventListener("click", function() {
+        // 리뷰 내용을 표시하고 QnA 내용을 숨김
+        document.getElementById("reviewContent").style.display = "block";
+        document.getElementById("reviewInputArea").style.display = "block"; // 리뷰 작성 폼 표시
+        
+        document.getElementById("qnaContent").style.display = "none";
+        document.getElementById("qnaInputArea").style.display = "none"; // QnA 작성 폼 숨김
     });
 
-    document.getElementById("cancelInput").addEventListener("click", function() {
-        document.getElementById("inputArea").style.display = "none";
+    // QnA 버튼 클릭 시
+    document.getElementById("showQnA").addEventListener("click", function() {
+        // QnA 내용을 표시하고 리뷰 내용을 숨김
+        document.getElementById("reviewContent").style.display = "none";
+        document.getElementById("reviewInputArea").style.display = "none"; // 리뷰 작성 폼 숨김
+        
+        document.getElementById("qnaContent").style.display = "block";
+        document.getElementById("qnaInputArea").style.display = "block"; // QnA 작성 폼 표시
+    });
+
+    // 리뷰 작성 버튼 클릭 시
+    document.getElementById("showReviewInput").addEventListener("click", function() {
+        // 리뷰 작성 폼을 표시
+        document.getElementById("reviewInputArea").style.display = "block";
+    });
+
+    // 리뷰 작성 취소 버튼 클릭 시
+    document.getElementById("cancelReviewInput").addEventListener("click", function() {
+        // 리뷰 작성 폼을 숨김
+        document.getElementById("reviewInputArea").style.display = "none";
+    });
+
+    // QnA 작성 버튼 클릭 시
+    document.getElementById("showQnAInput").addEventListener("click", function() {
+        // QnA 작성 폼을 표시
+        document.getElementById("qnaInputArea").style.display = "block";
+    });
+
+    // QnA 작성 취소 버튼 클릭 시
+    document.getElementById("cancelQnAInput").addEventListener("click", function() {
+        // QnA 작성 폼을 숨김
+        document.getElementById("qnaInputArea").style.display = "none";
     });
 </script>
 </body>
