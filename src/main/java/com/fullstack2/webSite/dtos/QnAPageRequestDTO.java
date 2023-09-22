@@ -15,7 +15,7 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 @Data
-public class ReviewPageRequestDTO {
+public class QnAPageRequestDTO {
 
 	private int page;
 	private int size;
@@ -23,7 +23,7 @@ public class ReviewPageRequestDTO {
 	private String type;//검색타입
 	private String keyword;//검색 키워드
 	
-	public ReviewPageRequestDTO() {
+	public QnAPageRequestDTO() {
 		this.page = 1;
 		this.size = 5;
 	}

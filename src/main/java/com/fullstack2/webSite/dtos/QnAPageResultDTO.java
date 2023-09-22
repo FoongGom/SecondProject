@@ -15,7 +15,7 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 @Data
-public class ReviewPageResultDTO<DTO, EN> {
+public class QnAPageResultDTO<DTO, EN> {
 
 	private List<DTO> dtoList;
 	
@@ -27,7 +27,7 @@ public class ReviewPageResultDTO<DTO, EN> {
 	private boolean prev,next;//이전, 다음을 표시 할 수 있는 변수
 	private List<Integer> pageList;//페이지 번호 목록
 	
-	public ReviewPageResultDTO(Page<EN> result, Function<EN, DTO> fn) {
+	public QnAPageResultDTO(Page<EN> result, Function<EN, DTO> fn) {
 		
 		dtoList = result
 				.stream()
