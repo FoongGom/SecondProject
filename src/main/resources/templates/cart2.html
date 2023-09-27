@@ -99,12 +99,6 @@ th {
 	color: #007BFF;
 }
 
-.n1 {
-	font-size: 24px;
-	margin-bottom: 5px;
-	color: red;
-}
-
 .page-step-title {
 	font-size: 18px;
 	font-weight: bold;
@@ -222,7 +216,7 @@ th {
 			}
 
 			// 주문 페이지로 이동 (cartn2.html로 가정)
-			location.href = 'cart2.html';
+			location.href = 'cartn2.html';
 		});
 
 		// 선택 상품 주문 버튼 클릭 시
@@ -241,7 +235,7 @@ th {
 			// 선택된 상품들에 대한 처리 (예: 선택된 상품만 주문 처리)
 			if (selectedItems.length > 0) {
 				// 주문 페이지로 이동 (cartn2.html로 가정)
-				location.href = 'cart2.html';
+				location.href = 'cartn2.html';
 			} else {
 				alert('선택된 상품이 없습니다.');
 			}
@@ -260,7 +254,7 @@ th {
 		<!-- 페이지 단계 -->
 		<div class="page-steps">
 			<div class="page-step">
-				<div class="n1">1</div>
+				<div class="page-step-icon">1</div>
 				<div class="page-step-title">장바구니</div>
 			</div>
 			<div class="page-step">
@@ -356,7 +350,7 @@ th {
 							<button class="checkout-button" onclick="deleteCartItem(this)">삭제</button>
 						</td>
 					</tr>
-
+					
 				</tbody>
 			</table>
 			<table class="summary-table">
@@ -378,8 +372,8 @@ th {
 			</table>
 		</div>
 		<div class="order-button">
-			<a href="/cart2" class="order-all">전체 상품 주문</a> <a href="/cart2"
-				class="order-check">선택 상품 주문</a>
+			<button class="order-all">전체 상품 주문</button>
+			<button class="order-check">선택 상품 주문</button>
 		</div>
 	</div>
 </body>

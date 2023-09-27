@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,7 +78,7 @@
 <div th:replace="header.html"></div> 
     <div class="container">
         <h2>회원 가입</h2>
-        <form action="/join" method="POST">
+        <form class="form-signin" id='join_form'>
             <div class="form-group">
                 <label for="user-type">회원 구분 <span>*</span></label>
                 <div class="select-group">
@@ -110,45 +110,79 @@
             <div class="form-group">
                 <label for="address">주소 <span>*</span></label>
                 <div class="select-group">
-                    <input type="text" id="postal-code" name="postal-code" placeholder="우편번호" required>
-                    <input type="text" id="address-basic" name="address-basic" placeholder="기본주소" required>
-                    <input type="text" id="address-rest" name="address-rest" placeholder="나머지주소 (선택입력가능)">
+                    <input type="text" id="postal-code" name="postalCode" placeholder="우편번호" required>
+                    <input type="text" id="address-basic" name="addressBasic" placeholder="기본주소" required>
+                    <input type="text" id="address-rest" name="addressRest" placeholder="나머지주소 (선택입력가능)">
                 </div>
             </div>
             <div class="form-group">
                 <label for="phone">일반전화</label>
                 <div class="select-group">
-                    <input type="text" id="phone-area" name="phone-area" placeholder="02">
-                    <input type="text" id="phone-number" name="phone-number" placeholder="-">
-                    <input type="text" id="phone-ext" name="phone-ext" placeholder="-">
+                    <input type="text" id="phone-area" name="phoneArea" placeholder="02">
+                    <input type="text" id="phone-number" name="phoneNumber" placeholder="-">
+                    <input type="text" id="phone-ext" name="phoneExt" placeholder="-">
                 </div>
             </div>
             <div class="form-group">
                 <label for="mobile">휴대전화 <span>*</span></label>
                 <div class="select-group">
-                    <input type="text" id="mobile-area" name="mobile-area" placeholder="010">
-                    <input type="text" id="mobile-number" name="mobile-number" placeholder="-">
-                    <input type="text" id="mobile-ext" name="mobile-ext" placeholder="-">
+                    <input type="text" id="mobile-area" name="mobileArea" placeholder="010">
+                    <input type="text" id="mobile-number" name="mobileNumber" placeholder="-">
+                    <input type="text" id="mobile-ext" name="mobileExt" placeholder="-">
                 </div>
             </div>
             
             
             
             <div class="form-group">
-                <label for="birth">생년월일</label>
-                <div class="select-group">
-                    <input type="number" id="birth-year" name="birth-year" placeholder="년">
-                    <input type="number" id="birth-month" name="birth-month" placeholder="월">
-                    <input type="number" id="birth-day" name="birth-day" placeholder="일">
-                    <select id="birth-calendar" name="birth-calendar">
-                        <option value="solar">양력</option>
-                        <option value="lunar">음력</option>
-                    </select>
-                </div>
+    <label for="birth">생년월일</label>
+    <div class="select-group">
+        <input type="number" id="birth-year" name="birthYear" placeholder="년">
+        <input type="number" id="birth-month" name="birthMonth" placeholder="월">
+        <input type="number" id="birth-day" name="birthDay" placeholder="일">
+        <select id="birth-calendar" name="birthCalendar">
+            <option value="solar">양력</option>
+            <option value="lunar">음력</option>
+        </select>
+    </div>
+
+
+
             </div>
             <button class="btn-primary" type="submit">회원 가입</button>
-        </form>
+            </form>
+        
         <p>이미 계정이 있으신가요? <a href="/login">로그인</a></p>
+        
+        
+        <script>
+        const form = document.getElementById('join_form');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+
+            const data = new FormData(form);
+            const param = JSON.stringify(Object.fromEntries(data));
+
+            fetch('/auth/join', {
+                method: 'POST',
+                body: param,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                debugger;
+                if (response.status == 200) {
+                    window.location.href = '/view/login';
+                    alert("회원가입 성공")
+                } else {
+                    alert("회원가입 실패")
+                }
+            })
+            .catch(error => console.log(error))
+        });
+    </script>
     </div>
 </body>
 </html>

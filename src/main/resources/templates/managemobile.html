@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -171,7 +171,12 @@ input[type="password"] {
 	<div class="container">
 		<h2>전화번호 변경</h2>
 		<div class="form-container">
-			<form>
+			<form action="/info/managemobile" method="post">
+				<div class="form-group">
+					<label for="oldPhoneNumber">기존 전화번호</label> <input type="tel"
+						id="oldPhoneNumber" name="oldPhoneNumber" th:value="${dto.mobile}" readonly >
+				</div>
+			
 				<div class="form-group">
 					<label for="newPhoneNumber">새 전화번호</label> <input type="tel"
 						id="newPhoneNumber" name="newPhoneNumber">

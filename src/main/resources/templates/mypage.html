@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -89,12 +89,12 @@ section a:hover {
 </style>
 </head>
 <body>
-	<div th:replace="header.html"></div>
+	<div th:replace="header2.html"></div>
 	<main>
 		<!-- 섹션 1: 회원 정보 -->
 		<section class="user-info" id="section1">
 			<h2>Welcome to GaeBal Office</h2>
-			<p>저희 쇼핑몰을 이용해 주셔서 감사합니다. 노재현 님은 [Premium] 회원입니다.</p>
+			<p th:text="'저희 쇼핑몰을 이용해 주셔서 감사합니다. ' + ${dto.name} + ' 님은 [Premium] 회원입니다.'"></p>
 		</section>
 
 		<!-- 섹션 2: 가용적립금 -->
@@ -136,7 +136,7 @@ section a:hover {
 			<h2>회원 정보 관리</h2>
 			<p>회원이신 고객님의 개인정보를 관리하는 공간입니다.</p>
 			<p>개인정보를 최신 정보로 유지하시면 보다 간편히 쇼핑을 즐기실 수 있습니다</p>
-			<a href="manageacc"><img src="/recordicon.png"
+			<a href="/info/manageacc"><img src="/recordicon.png"
 				alt="Account Management" class="section-image"></a>
 		</section>
 
@@ -162,7 +162,7 @@ section a:hover {
 		<section class="manage-address">
 			<h2>배송 주소록 관리</h2>
 			<p>자주 사용하는 배송지를 등록하고 관리하실 수 있습니다.</p>
-			<a href="/manageaddress"><img src="/ordericon.png"
+			<a href="/info/checkAddress"><img src="/ordericon.png"
 				alt="Address Book Management" class="section-image"></a>
 		</section>
 	</main>

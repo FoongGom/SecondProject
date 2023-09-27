@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -117,9 +117,9 @@ body {
 	
 	<div class="login-form">
 		<h2>회원 로그인</h2>
-		<form action="#" method="POST">
+		<form action="/login-process" method="POST">
 			<label for="username">이메일</label> <input type="text" id="username"
-				name="username" required> <label for="password">비밀번호</label>
+				name="email" required> <label for="password">비밀번호</label>
 			<input type="password" id="password" name="password" required>
 			<button type="submit">로그인</button>
 		</form>
@@ -130,5 +130,19 @@ body {
 			<a href="#">아이디 찾기</a> | <a href="#">비밀번호 찾기</a>
 		</div>
 	</div>
+	<script th:inline="javascript">
+
+    var message = /*[[${param.message}]]*/ '';
+    
+    $(document).ready(function() {
+        // 로그인 성공 또는 실패 메시지를 가져와서 표시
+        console.log('message 변수 값:', message); // 변수 값을 로깅
+        if (message[0] === '비밀번호변경완료') {
+            console.log(message[0]);
+            alert("비밀번호 변경 완료");
+        }  
+    });
+    </script>
+	
 </body>
 </html>
