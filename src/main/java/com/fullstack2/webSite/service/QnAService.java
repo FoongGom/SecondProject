@@ -13,20 +13,6 @@ public interface QnAService {
 	//리뷰란에서 페이지에 해당하는 글 목록 조회 리스트 get
 	QnAPageResultDTO<QnADTO, QnA> getList(QnAPageRequestDTO pageRequestDTO);
 	
-	//위 Object[] Entity를 DTO로 변환
-	default QnADTO entityToDTO(QnA qna) {
-		
-		QnADTO dto = QnADTO.builder()
-				.qno(qna.getQno())
-				.questioner(qna.getQuestioner())
-				.text(qna.getText())
-				.regDate(qna.getRegDate())
-				.modDate(qna.getModDate())
-				.build();
-		
-		return dto;
-	}
-	
 	//DTO를 Entity로 변환
 	default QnA dtoToEntity(QnADTO dto) {
 		
@@ -34,7 +20,23 @@ public interface QnAService {
 				.qno(dto.getQno())
 				.questioner(dto.getQuestioner())
 				.text(dto.getText())
+				.content(dto.getContent())
 				.build();
 		return qna;
 	}
+	//위 Object[] Entity를 DTO로 변환
+	default QnADTO entityToDTO(QnA qna) {
+		
+		QnADTO dto = QnADTO.builder()
+				.qno(qna.getQno())
+				.questioner(qna.getQuestioner())
+				.text(qna.getText())
+				.content(qna.getContent())
+				.regDate(qna.getRegDate())
+				.modDate(qna.getModDate())
+				.build();
+		
+		return dto;
+	}
+	
 }
