@@ -17,19 +17,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final MemberQuery query;
-    private final MemberRepository memberRepository;
+   private final MemberQuery query;
+  private final MemberRepository memberRepository;
 
-    //public boolean userEmailCheck(String email, String userName) {
-	//String findEmail = query.selectEmail(email);
-	//String findName = query.selectNameByName(userName);
-	//System.out.println(findEmail);
-	//System.out.println(findName);
+    public boolean userEmailCheck(String email, String userName) {
+	String findEmail = query.selectEmail(email);
+	String findName = query.selectNameByName(userName);
+	System.out.println(findEmail);
+	System.out.println(findName);
 
-	//if (findEmail != null && findName != null) {
-	//    return true;
-	//} else {
-	//    return false;
-	//}
-    //}
+	if (findEmail != null && findName != null) {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
 }
