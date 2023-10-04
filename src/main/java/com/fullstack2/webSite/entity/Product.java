@@ -3,7 +3,6 @@ package com.fullstack2.webSite.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.Map;
 
 @Entity
@@ -16,7 +15,6 @@ public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	private Long itemcount;
 
 	private String itemname;

@@ -23,7 +23,7 @@ public class QnA extends BaseEntity{
 	private Long qno;
 	private String text;
 	private String questioner;
-	
+	private String content;
 	
 	public String getText() {
         return text;
@@ -39,5 +39,13 @@ public class QnA extends BaseEntity{
 
     public void setQuestioner(String questioner) {
         this.questioner = questioner;
+    }
+    
+    public String getContent() {
+    	return content;
+    }
+    
+    public void setContent(String content) {
+    	this.content = content;
     }
 }
