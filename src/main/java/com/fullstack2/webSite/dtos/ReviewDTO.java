@@ -19,6 +19,8 @@ public class ReviewDTO {
 	private String reviewer;
 	private String text;
 	private String password;
+	private String content;
 	
+	private Long itemcount;
 	private LocalDateTime regDate, modDate;
 }

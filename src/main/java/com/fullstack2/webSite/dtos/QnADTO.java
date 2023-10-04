@@ -19,6 +19,7 @@ public class QnADTO {
 	private String questioner;
 	private String text;
 	private String password;
+	private String content;
 	
 	private LocalDateTime regDate, modDate;
 }
