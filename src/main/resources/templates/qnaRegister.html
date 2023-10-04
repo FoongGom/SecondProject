@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+.custom-button {
+    background-color: rgba(173, 216, 230, 0.3) ; /* 버튼 배경 색상 설정 (예: 빨간색) */
+    color: #ffffff; /* 버튼 텍스트 색상 설정 (예: 흰색) */
+    padding: 10px 20px; /* 버튼 내부 여백 설정 */
+    border: none; /* 버튼 테두리 제거 */
+    border-radius: 5px; /* 버튼 테두리를 둥글게 만듭니다. */
+    cursor: pointer; /* 포인터 커서로 변경하여 클릭 가능하게 만듭니다. */
+    font-size: 18px; /* 버튼 텍스트 크기 설정 */
+    font-family: 'Noto Sans KR', sans-serif; /* 글꼴 설정 */
+    transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 추가 */
+}
+</style>
+</head>
+<body>
+	<div th:replace="${dto.provider == '일반가입' ? 'header2.html' : 'header3.html'}"></div>
+	
+	<h1>글 쓰기</h1>
+
+    <form action="/your-submit-action-url" method="post">
+        <label for="title">제목:</label>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="content">내용:</label><br>
+        <textarea id="content" name="content" rows="5" cols="50" required></textarea><br><br>
+
+        <button type="button" onclick="goBack()" class="custom-button">취소</button>
+        <button type="submit" class="custom-button">작성 완료</button>
+    </form>
+    
+</body>
+</html>

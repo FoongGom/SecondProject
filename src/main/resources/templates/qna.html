@@ -192,7 +192,7 @@ a {
    border-radius: 5px; /* 테두리를 둥글게 만듭니다. */
 }
 
-.review-board {
+.qna-board {
    display: flex;
    justify-content: space-between;
    align-items: center;
@@ -203,12 +203,12 @@ a {
    padding: 10px;
 }
 
-.review-board.tr, td {
+.qna-board.tr, td {
    width: 200px;
    height: 50px;
 }
 
-.review-board.th {
+.qna-board.th {
 width: 100px;
 
 }
@@ -414,47 +414,105 @@ text-align:center;
       <a href="/my/review" class="list3">Review</a>
    </div>
 
-<div class="review-board">
-    <table>
-        <thead>
+   <div class="qna-board">
+      <table>
+         <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">제목</th>
-                <th scope="col">작성자</th>
-                <th scope="col">작성일</th>
+               <th scope="col">#</th>
+               <th scope="col">제목</th>
+               <th scope="col">작성자</th>
+               <th scope="col">작성일</th>
             </tr>
-        </thead>
+         </thead>
 
-        <tbody>
-            <tr th:each="dto : ${reviewResult.dtoList}">
-                <th scope="row" class="number">
-                    [[${dto.rno}]]
-                </th>
-                <td>
-                    [[${dto.text}]]
-                </td>
-                <td>
-                    <span th:text="${#strings.substring(dto.reviewer, 0, 3) + '********'}"></span>
-                </td>
-                <td>
-                    [[${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}]]
-                </td>
-               
+         <tbody>
+            <tr th:each="dto : ${qnaResult.dtoList}">
+               <th scope="row" class="number">[[${dto.qno}]]</th>
+               <td>[[${dto.text}]]</td>
+               <td><span th:text="${#strings.substring(dto.questioner, 0, 3) + '********'}"></span></td>
+               <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}]]</td>
             </tr>
-        </tbody>
-    </table>
-</div>
-<!-- 페이징 관련 정보를 표시하는 부분 -->
+         </tbody>
+      </table>
+   </div>
+   <!-- 버튼 영역 -->
+   <div class="button-area">
+      <button class="custom-button" onclick="toggleReviewInput()">QnA
+         등록</button>
+   </div>
+
+   <div id="reviewInputArea">
+      <form th:action="@{/addQnA}" method="post" class="form">
+         <input type="text" name="text" placeholder="QnA 제목" class="review-input">
+         <input type="text" name="content" placeholder="QnA 내용" class="review-input2"> 
+         <div class="buttons">
+            <button type="submit" class="b2">작성 완료</button>
+            <button type="button" id="cancelReviewInput" class="b2"
+               onclick="toggleReviewInput()">취소</button>
+         </div>
+      </form>
+   </div>
+   
+   <!-- 페이징 관련 정보를 표시하는 부분 -->
     <div class="pagination">
-        <span th:if="${reviewResult.prev}">
-            <a href="#" th:href="@{'/my/review?page=' + ${reviewResult.page - 1}}">이전</a>
+        <span th:if="${qnaResult.prev}">
+            <a href="#" th:href="@{'/my/qna?page=' + ${qnaResult.page - 1}}">이전</a>
         </span>
-        <span th:each="pageNum : ${reviewResult.pageList}">
-            <a href="#" th:href="@{'/my/review?page=' + ${pageNum}}" th:text="${pageNum}"></a>
+        <span th:each="pageNum : ${qnaResult.pageList}">
+            <a href="#" th:href="@{'/my/qna?page=' + ${pageNum}}" th:text="${pageNum}"></a>
         </span>
-        <span th:if="${reviewResult.next}">
-            <a href="#" th:href="@{'/my/review?page=' + ${reviewResult.page + 1}}">다음</a>
+        <span th:if="${qnaResult.next}">
+            <a href="#" th:href="@{'/my/qna?page=' + ${qnaResult.page + 1}}">다음</a>
         </span>
     </div>
+
+
+   <!-- 아래 코드를 </body> 태그 바로 위에 추가하세요 -->
+   <script>
+      // 테이블에 새로운 행을 추가하는 함수
+      function addTableRow(data) {
+         var table = document.querySelector(".notice-board table tbody"); // 테이블의 tbody 선택
+
+         var row = document.createElement("tr");
+         for ( var key in data) {
+            var cell = document.createElement("td");
+            cell.textContent = data[key];
+            row.appendChild(cell);
+         }
+
+         table.appendChild(row); // 새로운 행을 tbody에 추가
+      }
+
+      // 예제: 새로운 데이터를 추가
+      /*       var newData = {
+       글번호 :"2",
+       제목 : "새로운 제목",
+       작성자 : "새로운 이름",
+       작성일 : "새로운 날짜",
+       조회수 : "20",
+       };
+
+       addTableRow(newData); // 새로운 데이터를 테이블에 추가
+       */
+
+      function toggleReviewInput() {
+         var reviewInputArea = document.getElementById("reviewInputArea");
+         var reviewInput = document.querySelector(".review-input");
+         var cancelReviewInput = document
+               .getElementById("cancelReviewInput");
+
+         if (reviewInputArea.style.display === "none"
+               || reviewInputArea.style.display === "") {
+            reviewInputArea.style.display = "block";
+            reviewInput.style.display = "block";
+            cancelReviewInput.style.display = "block";
+         } else {
+            reviewInputArea.style.display = "none";
+            reviewInput.style.display = "none";
+            cancelReviewInput.style.display = "none";
+         }
+      }
+   </script>
+
 </body>
 </html>
