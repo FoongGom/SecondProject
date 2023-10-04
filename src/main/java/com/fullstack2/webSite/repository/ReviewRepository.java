@@ -12,7 +12,7 @@ import com.fullstack2.webSite.entity.Review;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-	@Query("SELECT r.text, r.reviewer FROM Review r WHERE r.rno = :rno")
+	@Query("SELECT r.text, r.reviewer, r.content, r.product FROM Review r WHERE r.rno = :rno")
 	List<Object[]> getReviewInfo(@Param("rno") Long rno);
 	
 	 @Query("SELECT r FROM Review r") // JPQL 쿼리 수정: 엔티티 Review를 반환하도록 변경

@@ -13,7 +13,7 @@ import com.fullstack2.webSite.entity.Review;
 
 public interface QnARepository extends JpaRepository<QnA, Long> {
 
-	@Query("SELECT q.text, q.questioner FROM QnA q WHERE q.qno = :qno")
+	@Query("SELECT q.text, q.questioner, q.content FROM QnA q WHERE q.qno = :qno")
 	List<Object[]> getQnAInfo(@Param("qno") Long qno);
 	
 	@Query("SELECT q FROM QnA q") // JPQL 쿼리 수정: 엔티티 QnA를 반환하도록 변경
